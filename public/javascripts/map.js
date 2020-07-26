@@ -10,4 +10,15 @@ var mymap = L.map('mapid').setView([3.5339, -76.3044], 14);
     accessToken: 'your.mapbox.access.token'*/
 }).addTo(mymap);
 
-L.marker([3.53795, -76.29722]).addTo(mymap);
+//L.marker([3.53795, -76.29722]).addTo(mymap);
+
+$.ajax({
+    dataType: "json",
+    url: "api/bicicletas",
+    success: function (res){
+        console.log(res);
+        res.bicicletas.forEach(e => {
+            L.marker([e.ubicacion[0], e.ubicacion[1]],{title:e.id}).addTo(mymap);
+        });
+    }
+})
