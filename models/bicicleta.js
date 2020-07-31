@@ -33,11 +33,11 @@ Bicicleta.removeByID = (id) =>{
     });
 }
 
-var b1 = new Bicicleta('1','blue','2019',[3.53795, -76.29722]);
+/*var b1 = new Bicicleta('1','blue','2019',[3.53795, -76.29900]);
 var b2 = new Bicicleta('2','red','2017',[3.53795, -76.29714]);
 
 Bicicleta.add(b1);
-Bicicleta.add(b2);
+Bicicleta.add(b2);*/
 
 
 module.exports = Bicicleta;
