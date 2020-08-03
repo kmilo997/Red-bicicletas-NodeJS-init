@@ -1,43 +1,50 @@
-function Bicicleta(id,color,modelo,ubicacion) {
-    this.id = id;
-    this.color = color;
-    this.modelo = modelo;
-    this.ubicacion = ubicacion;
-}
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-Bicicleta.prototype.toString = function test() {
+
+var bicicletaSchema = new Schema({
+    code:Number,
+    color:String,
+    modelo:String,
+    ubicacion:{
+        type:[Number],
+        index:{
+            type: '2dsphere',
+            sparse: true
+        }
+    }
+});
+
+
+bicicletaSchema.statics.createInstance = function (code,color,modelo,ubicacion) {
+    return new this({
+        code:code,
+        color:color,
+        modelo:modelo,
+        ubicacion:ubicacion
+    });
+};
+
+
+bicicletaSchema.method.toString = function () {
     return 'id' + this.id + ' | color '+ this.color + this.modelo + this.ubicacion;
 }
 
-Bicicleta.allBicicletas = [];
-Bicicleta.add = (bicicleta) =>{
-    Bicicleta.allBicicletas.push(bicicleta);
+bicicletaSchema.statics.allBicicletas = function (cb) {
+    return this.find({},cb);
 }
 
-Bicicleta.findByID = (id) =>{
-    var b = Bicicleta.allBicicletas.find(e => e.id == id);
-   
-    if(b){
-        return b;
-    }else{
-        throw new Error('Bicicleta no found');
-    }
+bicicletaSchema.statics.add = function (bici,cb) {
+    this.create(bici,cb)
 }
 
-Bicicleta.removeByID = (id) =>{
-    Bicicleta.allBicicletas.forEach(e => {
-        if(e.id == id){
-            Bicicleta.allBicicletas.splice(e,1);
-            return true;
-        }
-    });
+bicicletaSchema.statics.findByCode = function (code,cb) {
+    return this.findOne({code:code},cb);
 }
 
-/*var b1 = new Bicicleta('1','blue','2019',[3.53795, -76.29900]);
-var b2 = new Bicicleta('2','red','2017',[3.53795, -76.29714]);
-
-Bicicleta.add(b1);
-Bicicleta.add(b2);*/
+bicicletaSchema.statics.removeByCode = function (code,cb) {
+    return this.deleteOne({code:code},cb);
+}
 
 
-module.exports = Bicicleta;
+module.exports = mongoose.model('Bicicleta',bicicletaSchema);
