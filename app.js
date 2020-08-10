@@ -5,10 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//var usersRouter = require('./routes/users');
 var bicicletasRouter = require('./routes/bicicletas');
 var bicicletasAPIRouter = require('./routes/api/bicicletas');
 var usuariosAPIRouter = require('./routes/api/usuarios');
+
+var tokenRouter = require('./routes/token');
+var usersRouter = require('./routes/usuarios');
+
 
 var app = express();
 
@@ -45,6 +49,8 @@ app.use('/css',express.static(path.join(__dirname, 'public/stylesheets')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/token',tokenRouter)
+
 app.use('/bicicletas', bicicletasRouter);
 app.use('/api/bicicletas', bicicletasAPIRouter);
 app.use('/api/usuarios', usuariosAPIRouter);
