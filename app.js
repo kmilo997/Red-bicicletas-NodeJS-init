@@ -3,20 +3,21 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var newrelic = require('newrelic');
 
 var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
 var bicicletasRouter = require('./routes/bicicletas');
 var bicicletasAPIRouter = require('./routes/api/bicicletas');
 var usuariosAPIRouter = require('./routes/api/usuarios');
-
+var mongoose = require('mongoose');
 var tokenRouter = require('./routes/token');
 var usersRouter = require('./routes/usuarios');
 
 
 var app = express();
 
-var mongoose = require('mongoose');
+
 
 var mongoDB = 'mongodb://localhost:27017/red_bike';
 
